@@ -1,0 +1,31 @@
+// This will be a file that holds random select statements from databases I've built in SQl Server Management Studio
+
+//from Hospital Database with various operators
+select count(ad.AdmitDate) as 'TotalAdmissions', ph.FirstName, + ' ' + ph.LastName, as 'AdmittingPhysician'
+from AdmitDischarge ad
+join Physician ph
+on ad.AdmitDoc = ph.DoctorID
+group by ph.FirstName, ph.LastName
+
+//concat operator
+select count(ad.AdmitDate) as 'TotalAdmissions', concat(ph.FirstName, ' ', ph.LastName) as 'AdmittingPhysician'
+from AdmitDischarge ad
+join Physician ph
+on ad.AdmitDoc = ph.DoctorID
+group by ph.FirstName, ph.LastName
+
+//case expressions select statement
+select case
+when np.EventType = 'WC' then 'Wellness Check'
+when np.EventType = 'MED' then 'Medication'
+when np.EventType = 'FS' then 'Food Service'
+when np.EventType = 'AS' then 'Assistance'
+when np.EventType = 'TA' then 'Treatment Administration'
+when np.EventType = 'O' then 'Other'
+end as EventType,
+concat(p.FirstName, ' ', p.LastName) as 'Patient', np.Date, np.NurseID
+
+from NursePatient np
+join Patient p
+on np.PatientNo = p.PatientNo
+
